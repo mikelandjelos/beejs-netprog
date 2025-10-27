@@ -1,4 +1,4 @@
-blah: blah.o
+blah.exe: blah.o
 	cc blah.o -o blah.exe # Runs third
 
 blah.o: blah.c
