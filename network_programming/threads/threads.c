@@ -1,20 +1,25 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
-#include <sys/syscall.h>
+#include <syscall.h>
 
 void *thread_function(void *arg)
 {
     int thread_num = *(int *)arg;
-    pthread_t thread_id = pthread_self();
+    pthread_t thread_handle = pthread_self();
+    pid_t thread_id = gettid();
 
-    printf("Thread %d: TID = %lu\n", thread_num, thread_id);
+    printf("Thread %d: HANDLE = %lu, TID = %d\n", thread_num, thread_handle,
+           thread_id);
 
     // Small delay to make output more interesting
     sleep(rand() % 3);
 
-    printf("Thread %d (TID %lu) exiting\n", thread_num, thread_id);
+    printf("Thread %d (HANDLE %lu TID %d) exiting\n", thread_num, thread_handle,
+           thread_id);
     return NULL;
 }
 
