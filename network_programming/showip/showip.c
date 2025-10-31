@@ -42,8 +42,6 @@ typedef enum IpVersion {
 int main(int argc, char *argv[])
 {
     struct addrinfo hints, *res, *p;
-    int status;
-    char ipstr[INET6_ADDRSTRLEN];
 
     if (argc < 2 || argc > 3)
         fprintf(stderr, "usage: showip <hostname> [IPv4 | IPv6]\n"),
@@ -70,6 +68,7 @@ int main(int argc, char *argv[])
     hints.ai_family = ipver; // IP version agnostic
     hints.ai_socktype = SOCK_STREAM;
 
+    int status;
     if ((status = getaddrinfo(argv[1], "443", &hints, &res)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(-2);
@@ -78,6 +77,7 @@ int main(int argc, char *argv[])
     void *addr;
     struct sockaddr_in *ipv4;
     struct sockaddr_in6 *ipv6;
+    char ipstr[INET6_ADDRSTRLEN];
     for (p = res; p != NULL; p = p->ai_next) {
         // get the pointer to the address
         // different fields for different types
