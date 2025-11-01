@@ -68,8 +68,11 @@ int main(int argc, char *argv[])
     hints.ai_family = ipver; // IP version agnostic
     hints.ai_socktype = SOCK_STREAM;
 
+    if (strncmp("localhost", argv[1], 9))
+        hints.ai_flags = AI_PASSIVE;
+
     int status;
-    if ((status = getaddrinfo(argv[1], "443", &hints, &res)) != 0) {
+    if ((status = getaddrinfo(argv[1], NULL, &hints, &res)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(-2);
     }
