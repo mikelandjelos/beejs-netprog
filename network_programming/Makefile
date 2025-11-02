@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -g -pthread
 
 # Directories
-DIST_DIR = dist
+DIST_DIR = .dist
 
 # Get all .c files in the example directory
 C_FILES = $(wildcard $(EXAMPLE)/*.c)
